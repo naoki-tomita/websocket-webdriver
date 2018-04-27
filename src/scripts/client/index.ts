@@ -1,16 +1,11 @@
 import * as socketio from "socket.io-client";
 import { Message } from "../common/Types";
 
-const io = socketio(`http://${location.hostname}:8081`);
+log("WebSocket-Driver loaded.");
 
-io.on("error", (e: any) => {
-  console.error(JSON.stringify(e));
-});
-io.on("message", (data: string) => {
-  const message = parseMessage(data);
-  const result = procMessage(message);
-  io.send(JSON.stringify(result));
-});
+function log(message: string) {
+  console.log(`[WS-D]${message}`);
+}
 
 function parseMessage(message: string): Message {
   try {
@@ -31,5 +26,28 @@ function parseMessage(message: string): Message {
 
 function procMessage(message: Message) {
   const { function: fn, params } = message;
-  return new Function(fn)().call(window, params);
+  try {
+    return new Function(fn)().call(window, params);
+  } catch (e) {
+    log(`Error: ${e.message}`);
+  }
 }
+
+function main() {
+  const io = socketio(`https://${location.hostname}:8081`);
+
+  io.on("error", (e: any) => {
+    log(`Error: ${JSON.stringify(e)}`);
+  });
+  io.on("message", (data: string) => {
+    log(`Message: ${data}`);
+    const message = parseMessage(data);
+    log(`ParsedMessage: ${data}`);
+    const result = procMessage(message);
+    log(`Result: ${result}`);
+    io.send(JSON.stringify(result));
+  });
+}
+
+log("start");
+main();

@@ -1,12 +1,20 @@
 import * as socketio from "socket.io";
+import * as fs from "fs";
+import * as https from "https";
 
 let io: socketio.Server;
 let socket: socketio.Socket;
 let initialized = false;
 export async function initialize() {
-  io = socketio(8081);
+  const server = https.createServer({
+    key: fs.readFileSync("./server.key"),
+    cert: fs.readFileSync("./server.crt"),
+  });
+  server.listen(8081);
+  io = socketio.listen(server);
   return new Promise<socketio.Socket>(resolve => {
     io.on("connection", connectedSocket => {
+      console.log("Connected with client.");
       initialized = true;
       socket = connectedSocket;
       resolve(socket);
