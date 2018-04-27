@@ -1,36 +1,34 @@
-import { Browser } from "./Browser";
-import { Locator } from "./Locator";
-import { MessageType, ElementInfo } from "../common/types";
+import { evaluate } from "./FunctionEvaluator";
 
-export class ElementFinder {
-  browser: Browser;
-  constructor(browser: Browser) {
-    this.browser = browser;
-  }
-
-  async find(selector: Locator) {
-    const foundElement = await this.browser.procMessage({
-      type: MessageType.ELEMENT,
-      data: selector,
-    });
-    if (foundElement) {
-      return new Element(this.browser, selector);
-    }
-  }
+export function element(selector: string) {
+  return new Element(selector);
 }
 
 export class Element {
-  browser: Browser;
-  selector: string;
-  constructor(browser: Browser, selector: string) {
-    this.browser = browser;
+  readonly selector: string;
+  constructor(selector: string) {
     this.selector = selector;
   }
 
   async click() {
-    await this.browser.eval(function(selector) {
-      const el = document.querySelector(selector) as HTMLElement;
-      el.click();
+    return evaluate<string>(selector => {
+      var el = document.querySelector(selector);
+      if (el) {
+        (el as HTMLElement).click();
+      }
+    }, this.selector);
+  }
+
+  isDisabled() {
+
+  }
+
+  async getText() {
+    return evaluate<string>(selector => {
+      var el = document.querySelector(selector);
+      if (el) {
+        return (el as HTMLElement).innerText;
+      }
     }, this.selector);
   }
 }

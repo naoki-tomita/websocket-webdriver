@@ -1,74 +1,35 @@
-import { MessageType, ElementInfo, Message } from "../common/Types";
+import * as socketio from "socket.io-client";
+import { Message } from "../common/Types";
 
-const ws = new WebSocket(`ws://${location.hostname}:8081`);
+const io = socketio(`http://${location.hostname}:8081`);
 
-ws.addEventListener("open", () => {
-  // ws.send("CONNECTED");
+io.on("error", (e: any) => {
+  console.error(JSON.stringify(e));
 });
-
-ws.addEventListener("close", () => {
-
-});
-
-ws.addEventListener("error", () => {
-
-});
-
-ws.addEventListener("message", data => {
-  const message = parseMessage(data.data);
+io.on("message", (data: string) => {
+  const message = parseMessage(data);
   const result = procMessage(message);
-  ws.send(JSON.stringify(result));
+  io.send(JSON.stringify(result));
 });
 
 function parseMessage(message: string): Message {
   try {
     const parsedData = JSON.parse(message);
-    const { type, data, additionalData } = parsedData;
-    switch (type) {
-      case MessageType.EVAL:
-        return {
-          type,
-          data,
-          additionalData,
-        };
-      case MessageType.ELEMENT:
-        return {
-          type,
-          data,
-        }
-      default:
-        return {
-          type: MessageType.UNKNOWN,
-        };
-    }
+    const { function: fn, params } = parsedData;
+    return {
+      function: fn,
+      params,
+    };
   } catch (e) {
     return {
-      type: MessageType.UNKNOWN,
+      function: (() => {
+        console.log("failed to evaluate");
+      }).toString(),
     };
   }
 }
 
 function procMessage(message: Message) {
-  switch(message.type) {
-    case MessageType.EVAL:
-      return execFunction(message.data, message.additionalData);
-    case MessageType.ELEMENT:
-      return findElement(message.data);
-    default:
-      return;
-  }
-}
-
-function execFunction(func: string, params: any) {
-  return new Function(func).apply(window, params);
-}
-
-function findElement(selector: string): ElementInfo {
-  const el = document.querySelector(selector);
-  return {
-    id: el.id,
-    classNames: el.className.split(" "),
-    tag: el.tagName.toLowerCase(),
-    html: el.innerHTML,
-  }
+  const { function: fn, params } = message;
+  return new Function(fn)().call(window, params);
 }
