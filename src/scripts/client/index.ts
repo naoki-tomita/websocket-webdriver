@@ -1,37 +1,9 @@
 import * as socketio from "socket.io-client";
 import { Message } from "../common/Types";
+import { log } from "./utils/Logger";
+import { parseMessage, procMessage } from "./models/Message";
 
 log("WebSocket-Driver loaded.");
-
-function log(message: string) {
-  console.log(`[WS-D]${message}`);
-}
-
-function parseMessage(message: string): Message {
-  try {
-    const parsedData = JSON.parse(message);
-    const { function: fn, params } = parsedData;
-    return {
-      function: fn,
-      params,
-    };
-  } catch (e) {
-    return {
-      function: (() => {
-        console.log("failed to evaluate");
-      }).toString(),
-    };
-  }
-}
-
-function procMessage(message: Message) {
-  const { function: fn, params } = message;
-  try {
-    return new Function(fn)().call(window, params);
-  } catch (e) {
-    log(`Error: ${e.message}`);
-  }
-}
 
 function main() {
   const io = socketio(`https://${location.hostname}:8081`);

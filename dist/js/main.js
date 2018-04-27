@@ -553,7 +553,31 @@ eval("\n\nvar alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqr
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar socketio = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/lib/index.js\");\nlog(\"WebSocket-Driver loaded.\");\nfunction log(message) {\n    console.log(\"[WS-D]\" + message);\n}\nfunction parseMessage(message) {\n    try {\n        var parsedData = JSON.parse(message);\n        var fn = parsedData.function, params = parsedData.params;\n        return {\n            function: fn,\n            params: params,\n        };\n    }\n    catch (e) {\n        return {\n            function: (function () {\n                console.log(\"failed to evaluate\");\n            }).toString(),\n        };\n    }\n}\nfunction procMessage(message) {\n    var fn = message.function, params = message.params;\n    try {\n        return new Function(fn)().call(window, params);\n    }\n    catch (e) {\n        log(\"Error: \" + e.message);\n    }\n}\nfunction main() {\n    var io = socketio(\"https://\" + location.hostname + \":8081\");\n    io.on(\"error\", function (e) {\n        log(\"Error: \" + JSON.stringify(e));\n    });\n    io.on(\"message\", function (data) {\n        log(\"Message: \" + data);\n        var message = parseMessage(data);\n        log(\"ParsedMessage: \" + data);\n        var result = procMessage(message);\n        log(\"Result: \" + result);\n        io.send(JSON.stringify(result));\n    });\n}\nlog(\"start\");\nmain();\n\n\n//# sourceURL=webpack:///./src/scripts/client/index.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar socketio = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/lib/index.js\");\nvar Logger_1 = __webpack_require__(/*! ./utils/Logger */ \"./src/scripts/client/utils/Logger.ts\");\nvar Message_1 = __webpack_require__(/*! ./models/Message */ \"./src/scripts/client/models/Message.ts\");\nLogger_1.log(\"WebSocket-Driver loaded.\");\nfunction main() {\n    var io = socketio(\"https://\" + location.hostname + \":8081\");\n    io.on(\"error\", function (e) {\n        Logger_1.log(\"Error: \" + JSON.stringify(e));\n    });\n    io.on(\"message\", function (data) {\n        Logger_1.log(\"Message: \" + data);\n        var message = Message_1.parseMessage(data);\n        Logger_1.log(\"ParsedMessage: \" + data);\n        var result = Message_1.procMessage(message);\n        Logger_1.log(\"Result: \" + result);\n        io.send(JSON.stringify(result));\n    });\n}\nLogger_1.log(\"start\");\nmain();\n\n\n//# sourceURL=webpack:///./src/scripts/client/index.ts?");
+
+/***/ }),
+
+/***/ "./src/scripts/client/models/Message.ts":
+/*!**********************************************!*\
+  !*** ./src/scripts/client/models/Message.ts ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Logger_1 = __webpack_require__(/*! ../utils/Logger */ \"./src/scripts/client/utils/Logger.ts\");\nfunction parseMessage(message) {\n    try {\n        var parsedData = JSON.parse(message);\n        var fn = parsedData.function, params = parsedData.params;\n        return {\n            function: fn.replace(/\\s\\s/g, \"\"),\n            params: params,\n        };\n    }\n    catch (e) {\n        return {\n            function: (function () {\n                console.log(\"failed to evaluate\");\n            }).toString(),\n        };\n    }\n}\nexports.parseMessage = parseMessage;\nfunction procMessage(message) {\n    var fn = message.function, params = message.params;\n    try {\n        return new Function(fn)().call(window, params);\n    }\n    catch (e) {\n        Logger_1.log(\"Error: \" + e.message);\n    }\n}\nexports.procMessage = procMessage;\n\n\n//# sourceURL=webpack:///./src/scripts/client/models/Message.ts?");
+
+/***/ }),
+
+/***/ "./src/scripts/client/utils/Logger.ts":
+/*!********************************************!*\
+  !*** ./src/scripts/client/utils/Logger.ts ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nfunction error(message) {\n    console.error(\"[WS-D]\" + message);\n}\nexports.error = error;\nfunction log(message) {\n    console.log(\"[WS-D]\" + message);\n}\nexports.log = log;\n\n\n//# sourceURL=webpack:///./src/scripts/client/utils/Logger.ts?");
 
 /***/ }),
 
