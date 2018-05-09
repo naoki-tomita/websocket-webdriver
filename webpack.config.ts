@@ -2,7 +2,10 @@ import { Configuration } from "webpack";
 import * as path from "path";
 
 const config: Configuration = {
-  entry: "./src/scripts/client/index.ts",
+  entry: [
+    "babel-polyfill",
+    "./src/scripts/client/index.ts"
+  ],
   output: {
     filename: "[name].js",
     path: path.join(__dirname, "dist/js")

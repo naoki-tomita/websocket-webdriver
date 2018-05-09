@@ -7,3 +7,12 @@ export async function evaluate<T = null>(fn: (param: T) => any, param?: T) {
     params: param,
   });
 }
+
+type AsyncResolver = (result?: any) => void;
+
+export async function evaluateAsync<T = null>(fn: (result: AsyncResolver, param: T) => any, param?: T) {
+  return send({
+    asyncFunction: `return (${fn.toString()})`,
+    params: param,
+  });
+}

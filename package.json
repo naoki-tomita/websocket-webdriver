@@ -35,5 +35,10 @@
     "watch:client:ts": "chokidar \"./src/scripts/client/**/*\" -c \"yarn build:client:ts\"",
     "prestart": "run-p build",
     "start": "run-p watch serve"
+  },
+  "dependencies": {
+    "@types/html2canvas": "^0.0.33",
+    "babel-polyfill": "^6.26.0",
+    "html2canvas": "^1.0.0-alpha.12"
   }
 }

@@ -1,7 +1,10 @@
 import * as socketio from "socket.io-client";
-import { Message } from "../common/Types";
+
+import { Message, isSyncMessage } from "../common/Types";
 import { log } from "./utils/Logger";
-import { parseMessage, procMessage } from "./models/Message";
+import { parseMessage, evaluate, evaluateAsync } from "./models/Message";
+
+import "./utils/MonkeyPatch";
 
 log("WebSocket-Driver loaded.");
 
@@ -11,11 +14,23 @@ function main() {
   io.on("error", (e: any) => {
     log(`Error: ${JSON.stringify(e)}`);
   });
-  io.on("message", (data: string) => {
+  io.on("message",async (data: string) => {
     log(`Message: ${data}`);
     const message = parseMessage(data);
-    log(`ParsedMessage: ${data}`);
-    const result = procMessage(message);
+    let result: any;
+    if (isSyncMessage(message)) {
+      log(`Sync`);
+      result = evaluate({
+        function: message.function,
+        params: message.params,
+      });
+    } else {
+      log(`Async`);
+      result = await evaluateAsync({
+        function: message.asyncFunction,
+        params: message.params,
+      });
+    }
     log(`Result: ${result}`);
     io.send(JSON.stringify(result));
   });
