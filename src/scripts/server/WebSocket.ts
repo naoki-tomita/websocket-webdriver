@@ -29,7 +29,6 @@ export async function send(data: any) {
   }
   return new Promise(resolve => {
     socket.once("message", data => {
-      console.log(`Retrieved: ${data}`);
       try {
         const parsedData = JSON.parse(data);
         resolve(parsedData);

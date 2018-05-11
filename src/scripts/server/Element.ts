@@ -34,6 +34,17 @@ export class Element {
     return !!isHidden;
   }
 
+  async isDisabled() {
+    const isDisabled = await evaluate<string>(selector => {
+      const el = document.querySelector(this.selector);
+      if (el) {
+        return (el as any).disabled;
+      }
+      return false;
+    }, this.selector);
+    return !!isDisabled;
+  }
+
   async waitUntilAppear() {
     return this.waitFor(async () => await this.isExist());
   }
@@ -42,12 +53,20 @@ export class Element {
     return this.waitFor(async () => !(await this.isHidden()));
   }
 
+  async waitUntilEnable() {
+    return this.waitFor(async () => !(await this.isDisabled()));
+  }
+
   async waitUntilDisappear() {
     return this.waitFor(async () => !(await this.isExist()));
   }
 
   async waitUntilInvisible() {
     return this.waitFor(async () => await this.isHidden());
+  }
+
+  async waitUntilDisabled() {
+    return this.waitFor(async () => await this.isDisabled());
   }
 
   async waitFor(cb: () => Promise<boolean> | boolean) {
@@ -76,10 +95,6 @@ export class Element {
         el.dispatchEvent(event);
       }
     }, this.selector);
-  }
-
-  isDisabled() {
-
   }
 
   async getText() {

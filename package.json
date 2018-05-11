@@ -1,5 +1,5 @@
 {
-  "name": "websocket-driver",
+  "name": "websocket-webdriver",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
