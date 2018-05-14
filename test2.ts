@@ -7,7 +7,7 @@ async function main() {
   await initialize();
 
   await element("#button").waitUntilAppear();
-  await captureScreenShot();
+  await captureScreenShot("./screenshot.png");
 }
 
 main();
