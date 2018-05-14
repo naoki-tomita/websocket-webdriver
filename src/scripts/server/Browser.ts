@@ -1,5 +1,8 @@
-import * as html2canvas from "html2canvas";
 import { evaluate, evaluateAsync } from "./FunctionEvaluator";
+import { atob } from "./utils/Binary";
+import { writeFileSync } from "fs";
+
+declare const html2canvas: Html2CanvasStatic;
 
 export async function findElement(selector: string) {
   return evaluate<string>(selector => {
@@ -7,8 +10,8 @@ export async function findElement(selector: string) {
   }, selector);
 }
 
-export async function captureScreenShot() {
-  return evaluateAsync(result => {
+export async function captureScreenShot(filePath: string) {
+  const png = await evaluateAsync(result => {
     html2canvas(document.body)
     .then(canvas => {
       result(canvas.toDataURL());
@@ -17,4 +20,5 @@ export async function captureScreenShot() {
       result("ERROR");
     });
   });
+  writeFileSync(filePath, new Buffer((png as string).replace("data:image/png;base64,", ""), 'base64'));
 }

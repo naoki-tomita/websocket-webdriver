@@ -7,8 +7,7 @@ async function main() {
   await initialize();
 
   await element("#button").waitUntilAppear();
-  const png = await captureScreenShot();
-  writeFileSync("./screen.png", png);
+  await captureScreenShot();
 }
 
 main();
