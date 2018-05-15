@@ -8,7 +8,7 @@ const config: Configuration = {
   ],
   output: {
     filename: "[name].js",
-    path: path.join(__dirname, "dist/js")
+    path: path.join(__dirname, "dist/client")
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"]

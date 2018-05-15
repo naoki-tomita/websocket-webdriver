@@ -1,7 +1,7 @@
 {
   "name": "websocket-webdriver",
   "version": "1.0.2",
-  "main": "src/scripts/server/index.js",
+  "main": "dist/scripts/server/index.js",
   "license": "MIT",
   "devDependencies": {
     "@types/socket.io": "1.4.33",
@@ -27,6 +27,8 @@
     "build": "run-p build:*",
     "build:client": "run-p build:client:*",
     "build:client:ts": "webpack --config ./webpack.config.ts",
+    "build:server": "run-p build:server:*",
+    "build:server:ts": "tsc",
     "serve": "run-p serve:*",
     "serve:websocket": "ts-node ./test2.ts",
     "serve:webserver": "ws -p 8080 --https",
