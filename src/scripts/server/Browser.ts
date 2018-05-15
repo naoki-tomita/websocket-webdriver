@@ -1,5 +1,4 @@
 import { evaluate, evaluateAsync } from "./FunctionEvaluator";
-import { atob } from "./utils/Binary";
 import { writeFileSync } from "fs";
 
 declare const html2canvas: Html2CanvasStatic;
@@ -20,5 +19,5 @@ export async function captureScreenShot(filePath: string) {
       result("ERROR");
     });
   });
-  writeFileSync(filePath, new Buffer((png as string).replace("data:image/png;base64,", ""), 'base64'));
+  writeFileSync(filePath, new Buffer((png as string).replace("data:image/png;base64,", ""), "base64"));
 }
