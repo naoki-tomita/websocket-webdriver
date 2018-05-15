@@ -1,7 +1,7 @@
 {
   "name": "websocket-webdriver",
   "version": "1.0.1",
-  "main": "index.js",
+  "main": "src/scripts/server/index.js",
   "license": "MIT",
   "devDependencies": {
     "@types/socket.io": "1.4.33",
