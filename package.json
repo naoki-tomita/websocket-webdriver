@@ -1,15 +1,19 @@
 {
   "name": "websocket-webdriver",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "dist/scripts/server/index.js",
   "license": "MIT",
   "devDependencies": {
+    "@types/html2canvas": "^0.0.33",
+    "@types/node": "^10.0.8",
     "@types/socket.io": "1.4.33",
     "@types/socket.io-client": "1.4.32",
     "@types/webpack": "4.1.4",
     "@types/ws": "4.0.2",
     "awesome-typescript-loader": "5.0.0",
+    "babel-polyfill": "^6.26.0",
     "chokidar-cli": "1.2.0",
+    "html2canvas": "^1.0.0-alpha.12",
     "local-web-server": "2.5.1",
     "nodejs-scanf": "^1.1.0",
     "npm-run-all": "4.1.2",
@@ -38,10 +42,5 @@
     "prestart": "run-p build",
     "start": "run-p watch serve"
   },
-  "dependencies": {
-    "@types/html2canvas": "^0.0.33",
-    "@types/node": "^10.0.8",
-    "babel-polyfill": "^6.26.0",
-    "html2canvas": "^1.0.0-alpha.12"
-  }
+  "dependencies": {}
 }
