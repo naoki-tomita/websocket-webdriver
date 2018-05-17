@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/html2canvas": "^0.0.33",
+    "@types/jest": "^22.2.3",
     "@types/node": "^10.0.8",
     "@types/socket.io": "1.4.33",
     "@types/socket.io-client": "1.4.32",
@@ -14,10 +15,13 @@
     "babel-polyfill": "^6.26.0",
     "chokidar-cli": "1.2.0",
     "html2canvas": "^1.0.0-alpha.12",
+    "jest": "^22.4.3",
     "local-web-server": "2.5.1",
     "nodejs-scanf": "^1.1.0",
     "npm-run-all": "4.1.2",
+    "prettier": "^1.12.1",
     "socket.io": "2.1.0",
+    "ts-jest": "^22.4.6",
     "ts-node": "6.0.1",
     "typescript": "2.8.3",
     "webpack": "4.6.0",
@@ -40,7 +44,7 @@
     "watch:client": "run-p watch:client:*",
     "watch:client:ts": "chokidar \"./src/scripts/client/**/*\" -c \"yarn build:client:ts\"",
     "prestart": "run-p build",
-    "start": "run-p watch serve"
-  },
-  "dependencies": {}
+    "start": "run-p watch serve",
+    "test": "jest --config ./jest.config.json"
+  }
 }
