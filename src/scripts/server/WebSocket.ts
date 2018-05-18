@@ -7,8 +7,16 @@ import { createRandomString } from "../common/utils/Random";
 let io: socketio.Server;
 let socket: socketio.Socket;
 let initialized = false;
-let sessionId: string = createRandomString(8);
-let session: string | null = null;
+let serverSession: string = createRandomString(8);
+let clientSession: string | null = null;
+
+async function waitMessage(s: socketio.Socket) {
+  return new Promise<string>(r => {
+    s.once("message", m => {
+      r(m);
+    });
+  });
+}
 
 export async function initialize() {
   const server = https.createServer({
@@ -19,29 +27,27 @@ export async function initialize() {
   server.listen(8081);
   io = socketio.listen(server);
   return new Promise<socketio.Socket>(resolve => {
-    io.on("connection", connectedSocket => {
-      connectedSocket.once("message", clSession => {
-        console.log(`Establish request from: ${clSession}`);
-        connectedSocket.once("message", pass => {
-          console.log(`Connected to: ${session}`);
-          if (pass === `${sessionId}:${session}`) {
-            initialized = true;
-            socket = connectedSocket;
-            resolve(socket);
-          } else {
-            connectedSocket.disconnect();
-          }
-        });
-        if (
-          (session && clSession !== session) ||
-          !clSession
-        ) {
-          connectedSocket.disconnect();
-        } else {
-          session = clSession;
-          connectedSocket.send(sessionId);
-        }
-      });
+    io.on("connection", async s => {
+      const clSession = await waitMessage(s);
+      console.log(`Establish request from: ${clSession}`);
+      if (
+        (clientSession && clSession !== clientSession) ||
+        !clSession
+      ) {
+        s.disconnect();
+      } else {
+        clientSession = clSession;
+        s.send(serverSession);
+      }
+      const result = await waitMessage(s);
+      if (result === `${serverSession}:${clientSession}`) {
+        console.log(`Connected to: ${clSession}`);
+        initialized = true;
+        socket = s;
+      } else {
+        s.disconnect();
+      }
+      resolve(s);
     });
   });
 }
