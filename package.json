@@ -1,6 +1,6 @@
 {
   "name": "websocket-webdriver",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "main": "dist/scripts/server/index.js",
   "license": "MIT",
   "devDependencies": {
@@ -45,6 +45,7 @@
     "watch:client:ts": "chokidar \"./src/scripts/client/**/*\" -c \"yarn build:client:ts\"",
     "prestart": "run-p build",
     "start": "run-p watch serve",
-    "test": "jest --config ./jest.config.json"
+    "test": "jest --config ./jest.config.json",
+    "prepublish": "run-p build"
   }
 }
