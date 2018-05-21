@@ -5,8 +5,7 @@ import * as https from "https";
 import { createRandomString } from "../common/utils/Random";
 
 let io: socketio.Server;
-let socket: socketio.Socket;
-let initialized = false;
+let socket: socketio.Socket | null = null;
 let serverSession: string = createRandomString(8);
 let clientSession: string | null = null;
 
@@ -42,22 +41,25 @@ export async function initialize() {
       const result = await waitMessage(s);
       if (result === `${serverSession}:${clientSession}`) {
         console.log(`Connected to: ${clSession}`);
-        initialized = true;
         socket = s;
       } else {
         s.disconnect();
       }
+
+      s.once("disconnect", () => {
+        socket = null;
+      });
       resolve(s);
     });
   });
 }
 
 export async function send(data: any) {
-  if (!initialized) {
-    throw Error("WebSocket not initialized.");
+  if (!socket) {
+    await initialize();
   }
   return new Promise(resolve => {
-    socket.once("message", data => {
+    (socket as socketio.Socket).once("message", data => {
       try {
         const parsedData = JSON.parse(data);
         resolve(parsedData);
@@ -65,6 +67,6 @@ export async function send(data: any) {
         resolve(data);
       }
     });
-    socket.send(JSON.stringify(data));
+    (socket as socketio.Socket).send(JSON.stringify(data));
   });
 }
