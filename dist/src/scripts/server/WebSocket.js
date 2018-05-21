@@ -40,12 +40,23 @@ var fs = require("fs");
 var https = require("https");
 var Random_1 = require("../common/utils/Random");
 var io;
-var socket;
-var initialized = false;
-var sessionId = Random_1.createRandomString(8);
-var session = null;
+var socket = null;
+var serverSession = Random_1.createRandomString(8);
+var clientSession = null;
+function waitMessage(s) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            return [2 /*return*/, new Promise(function (r) {
+                    s.once("message", function (m) {
+                        r(m);
+                    });
+                })];
+        });
+    });
+}
 function initialize() {
     return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
         var server;
         return __generator(this, function (_a) {
             server = https.createServer({
@@ -56,30 +67,40 @@ function initialize() {
             server.listen(8081);
             io = socketio.listen(server);
             return [2 /*return*/, new Promise(function (resolve) {
-                    io.on("connection", function (connectedSocket) {
-                        connectedSocket.once("message", function (clSession) {
-                            console.log("Establish request from: " + clSession);
-                            connectedSocket.once("message", function (pass) {
-                                console.log("Connected to: " + session);
-                                if (pass === sessionId + ":" + session) {
-                                    initialized = true;
-                                    socket = connectedSocket;
-                                    resolve(socket);
-                                }
-                                else {
-                                    connectedSocket.disconnect();
-                                }
-                            });
-                            if ((session && clSession !== session) ||
-                                !clSession) {
-                                connectedSocket.disconnect();
-                            }
-                            else {
-                                session = clSession;
-                                connectedSocket.send(sessionId);
+                    io.on("connection", function (s) { return __awaiter(_this, void 0, void 0, function () {
+                        var clSession, result;
+                        return __generator(this, function (_a) {
+                            switch (_a.label) {
+                                case 0: return [4 /*yield*/, waitMessage(s)];
+                                case 1:
+                                    clSession = _a.sent();
+                                    console.log("Establish request from: " + clSession);
+                                    if ((clientSession && clSession !== clientSession) ||
+                                        !clSession) {
+                                        s.disconnect();
+                                    }
+                                    else {
+                                        clientSession = clSession;
+                                        s.send(serverSession);
+                                    }
+                                    return [4 /*yield*/, waitMessage(s)];
+                                case 2:
+                                    result = _a.sent();
+                                    if (result === serverSession + ":" + clientSession) {
+                                        console.log("Connected to: " + clSession);
+                                        socket = s;
+                                    }
+                                    else {
+                                        s.disconnect();
+                                    }
+                                    s.once("disconnect", function () {
+                                        socket = null;
+                                    });
+                                    resolve(s);
+                                    return [2 /*return*/];
                             }
                         });
-                    });
+                    }); });
                 })];
         });
     });
@@ -88,21 +109,26 @@ exports.initialize = initialize;
 function send(data) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            if (!initialized) {
-                throw Error("WebSocket not initialized.");
+            switch (_a.label) {
+                case 0:
+                    if (!!socket) return [3 /*break*/, 2];
+                    return [4 /*yield*/, initialize()];
+                case 1:
+                    _a.sent();
+                    _a.label = 2;
+                case 2: return [2 /*return*/, new Promise(function (resolve) {
+                        socket.once("message", function (data) {
+                            try {
+                                var parsedData = JSON.parse(data);
+                                resolve(parsedData);
+                            }
+                            catch (e) {
+                                resolve(data);
+                            }
+                        });
+                        socket.send(JSON.stringify(data));
+                    })];
             }
-            return [2 /*return*/, new Promise(function (resolve) {
-                    socket.once("message", function (data) {
-                        try {
-                            var parsedData = JSON.parse(data);
-                            resolve(parsedData);
-                        }
-                        catch (e) {
-                            resolve(data);
-                        }
-                    });
-                    socket.send(JSON.stringify(data));
-                })];
         });
     });
 }
