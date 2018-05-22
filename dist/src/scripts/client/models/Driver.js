@@ -99,7 +99,7 @@ function startDriver() {
                     result = _a.sent();
                     _a.label = 3;
                 case 3:
-                    Logger_1.log("Result: " + JSON.stringify(result).substr(0, 100));
+                    Logger_1.log("Result: " + (JSON.stringify(result) || "").substr(0, 100));
                     io.send(JSON.stringify(result));
                     return [2 /*return*/];
             }

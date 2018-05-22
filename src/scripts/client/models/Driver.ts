@@ -43,7 +43,7 @@ function startDriver() {
         params: message.params,
       });
     }
-    log(`Result: ${JSON.stringify(result).substr(0, 100)}`);
+    log(`Result: ${(JSON.stringify(result) || "").substr(0, 100)}`);
     io.send(JSON.stringify(result));
   });
 }
