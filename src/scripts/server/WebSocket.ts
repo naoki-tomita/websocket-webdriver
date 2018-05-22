@@ -10,8 +10,10 @@ let serverSession: string = createRandomString(8);
 let clientSession: string | null = null;
 
 async function waitMessage(s: socketio.Socket) {
-  return new Promise<string>(r => {
+  return new Promise<string>((r, x) => {
+    const y = setTimeout(x, 10000);
     s.once("message", m => {
+      clearTimeout(y);
       r(m);
     });
   });
