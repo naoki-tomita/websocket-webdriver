@@ -1,6 +1,6 @@
 {
   "name": "websocket-webdriver",
-  "version": "1.1.0",
+  "version": "0.0.1",
   "main": "dist/src/scripts/server/index.js",
   "types": "dist/src/scripts/server/index.d.ts",
   "license": "MIT",
