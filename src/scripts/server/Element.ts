@@ -13,7 +13,7 @@ export class Element {
   }
 
   async isExist() {
-    const isExist = await evaluate<string>(selector => {
+    const isExist = await evaluate(selector => {
       const el = document.querySelector(selector);
       return !!el;
     }, this.selector);
@@ -21,7 +21,7 @@ export class Element {
   }
 
   async isHidden() {
-    const isHidden = await evaluate<string>(selector => {
+    const isHidden = await evaluate(selector => {
       const el = document.querySelector(selector);
       if (el) {
         const hidden = (el as HTMLElement).hidden ||
@@ -35,8 +35,8 @@ export class Element {
   }
 
   async isDisabled() {
-    const isDisabled = await evaluate<string>(selector => {
-      const el = document.querySelector(this.selector);
+    const isDisabled = await evaluate(selector => {
+      const el = document.querySelector(selector);
       if (el) {
         return (el as any).disabled;
       }
@@ -87,7 +87,7 @@ export class Element {
 
   async click() {
     await this.waitUntilAppear();
-    return evaluate<string>(selector => {
+    return evaluate(selector => {
       const el = document.querySelector(selector);
       const event = document.createEvent("Event");
       event.initEvent("click", true, true);
@@ -99,11 +99,18 @@ export class Element {
 
   async getText() {
     await this.waitUntilAppear();
-    return evaluate<string>(selector => {
+    return evaluate(selector => {
       const el = document.querySelector(selector);
       if (el) {
         return (el as HTMLElement).innerText;
       }
     }, this.selector);
+  }
+
+  async sendKeys(keys: string) {
+    await this.waitUntilAppear();
+    return evaluate((selector, keys) => {
+
+    }, this.selector, keys);
   }
 }

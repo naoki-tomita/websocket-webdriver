@@ -31,11 +31,11 @@ export function parseMessage(message: string): Message {
 
 export function evaluate(message: {
   function: string;
-  params?: any;
+  params: any[];
 }) {
   const { function: fn, params } = message;
   try {
-    return new Function(fn)().call(window, params);
+    return new Function(fn)().apply(window, params);
   } catch (e) {
     log(`Error: ${e.message}`);
   }
@@ -48,7 +48,7 @@ export async function evaluateAsync(message: {
   const { function: fn, params } = message;
   try {
     return new Promise(resolve => {
-      new Function(fn)().call(window, resolve, params);
+      new Function(fn)().apply(window, resolve, params);
     });
   } catch (e) {
     log(`Error: ${e.message}`);
