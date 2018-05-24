@@ -64,8 +64,8 @@ function initialize() {
         var server;
         return __generator(this, function (_a) {
             server = (https || http).createServer({
-                key: fs.readFileSync(path.join(__dirname, "./server.key")),
-                cert: fs.readFileSync(path.join(__dirname, "./server.crt")),
+                key: fs.readFileSync(path.join(__dirname, "../../../", "./server.key")),
+                cert: fs.readFileSync(path.join(__dirname, "../../../", "./server.crt")),
             });
             console.log("Server listening...");
             server.listen(8081);
