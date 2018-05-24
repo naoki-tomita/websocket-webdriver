@@ -1,5 +1,6 @@
 import { evaluate, evaluateAsync } from "./FunctionEvaluator";
 import { writeFileSync } from "fs";
+import { sleep } from "./utils/Sleep";
 
 declare const html2canvas: Html2CanvasStatic;
 
@@ -24,19 +25,21 @@ export class Browser {
   }
 
   async getUrl(path: string) {
-    return evaluate((path: string) => {
+    await evaluate((path: string) => {
       setTimeout(() => {
         location.assign(path);
       }, 100);
     }, path);
+    await sleep(500);
   }
 
   async reload(forceReload?: boolean) {
-    return evaluate((forceReload?: boolean) => {
+    await evaluate((forceReload?: boolean) => {
       setTimeout(() => {
         location.reload(forceReload);
       }, 100);
     }, forceReload);
+    await sleep(500);
   }
 }
 

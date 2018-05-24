@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var FunctionEvaluator_1 = require("./FunctionEvaluator");
 var fs_1 = require("fs");
+var Sleep_1 = require("./utils/Sleep");
 function findElement(selector) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -75,22 +76,38 @@ var Browser = /** @class */ (function () {
     Browser.prototype.getUrl = function (path) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, FunctionEvaluator_1.evaluate(function (path) {
-                        setTimeout(function () {
-                            location.assign(path);
-                        }, 100);
-                    }, path)];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (path) {
+                            setTimeout(function () {
+                                location.assign(path);
+                            }, 100);
+                        }, path)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
     };
     Browser.prototype.reload = function (forceReload) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, FunctionEvaluator_1.evaluate(function (forceReload) {
-                        setTimeout(function () {
-                            location.reload(forceReload);
-                        }, 100);
-                    }, forceReload)];
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (forceReload) {
+                            setTimeout(function () {
+                                location.reload(forceReload);
+                            }, 100);
+                        }, forceReload)];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                    case 2:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
             });
         });
     };
