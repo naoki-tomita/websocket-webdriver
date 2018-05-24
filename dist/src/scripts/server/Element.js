@@ -256,6 +256,10 @@ var Element = /** @class */ (function () {
                     case 1:
                         _a.sent();
                         return [2 /*return*/, FunctionEvaluator_1.evaluate(function (selector, keys) {
+                                var el = document.querySelector(selector);
+                                if (el && el.tagName.toLowerCase() === "input") {
+                                    el.value = keys;
+                                }
                             }, this.selector, keys)];
                 }
             });

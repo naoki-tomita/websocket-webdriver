@@ -110,7 +110,10 @@ export class Element {
   async sendKeys(keys: string) {
     await this.waitUntilAppear();
     return evaluate((selector, keys) => {
-
+      const el = document.querySelector(selector);
+      if (el && (el as HTMLElement).tagName.toLowerCase() === "input") {
+        (el as HTMLInputElement).value = keys;
+      }
     }, this.selector, keys);
   }
 }
