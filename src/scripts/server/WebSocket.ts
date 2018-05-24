@@ -22,10 +22,13 @@ async function waitMessage(s: socketio.Socket) {
 }
 
 export async function initialize() {
-  const server = (https || http).createServer({
-    key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
-    cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
-  });
+  const server = process.env.HTTPS === "true"
+    ? https.createServer({
+        key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
+        cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
+      })
+    : http.createServer();
+
   console.log("Server listening...");
   server.listen(8081);
   io = socketio.listen(server);
