@@ -108,7 +108,7 @@ function startDriver() {
 }
 function initialize() {
     var _this = this;
-    io = socketio("https://" + location.hostname + ":8081");
+    io = socketio(location.protocol + "//" + location.hostname + ":8081");
     io.on("connect", function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {

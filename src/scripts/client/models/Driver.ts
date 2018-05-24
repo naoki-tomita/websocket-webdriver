@@ -49,7 +49,7 @@ function startDriver() {
 }
 
 export function initialize() {
-  io = socketio(`https://${location.hostname}:8081`)
+  io = socketio(`${location.protocol}//${location.hostname}:8081`)
   io.on("connect", async () => {
     await establishHandShake();
     startDriver();
