@@ -75,20 +75,18 @@ var Browser = /** @class */ (function () {
     Browser.prototype.getUrl = function (path) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                FunctionEvaluator_1.evaluate(function (path) {
-                    location.assign(path);
-                }, path);
-                return [2 /*return*/];
+                return [2 /*return*/, FunctionEvaluator_1.evaluate(function (path) {
+                        location.assign(path);
+                    }, path)];
             });
         });
     };
     Browser.prototype.reload = function (forceReload) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                FunctionEvaluator_1.evaluate(function (forceReload) {
-                    location.reload(forceReload);
-                }, forceReload);
-                return [2 /*return*/];
+                return [2 /*return*/, FunctionEvaluator_1.evaluate(function (forceReload) {
+                        location.reload(forceReload);
+                    }, forceReload)];
             });
         });
     };

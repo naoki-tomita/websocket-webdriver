@@ -24,13 +24,13 @@ export class Browser {
   }
 
   async getUrl(path: string) {
-    evaluate((path: string) => {
+    return evaluate((path: string) => {
       location.assign(path);
     }, path);
   }
 
   async reload(forceReload?: boolean) {
-    evaluate((forceReload?: boolean) => {
+    return evaluate((forceReload?: boolean) => {
       location.reload(forceReload);
     }, forceReload);
   }
