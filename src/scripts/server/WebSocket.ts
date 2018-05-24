@@ -22,16 +22,18 @@ async function waitMessage(s: socketio.Socket) {
 }
 
 export async function initialize() {
-  const server = process.env.HTTPS === "true"
-    ? https.createServer({
-        key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
-        cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
-      })
-    : http.createServer();
+  if (!io) {
+    const server = process.env.HTTPS === "true"
+      ? https.createServer({
+          key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
+          cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
+        })
+      : http.createServer();
 
-  console.log("Server listening...");
-  server.listen(8081);
-  io = socketio.listen(server);
+    console.log("Server listening...");
+    server.listen(8081);
+    io = socketio.listen(server);
+  }
   return new Promise<socketio.Socket>(resolve => {
     io.on("connection", async s => {
       const clSession = await waitMessage(s);

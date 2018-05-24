@@ -63,15 +63,17 @@ function initialize() {
         var _this = this;
         var server;
         return __generator(this, function (_a) {
-            server = process.env.HTTPS === "true"
-                ? https.createServer({
-                    key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
-                    cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
-                })
-                : http.createServer();
-            console.log("Server listening...");
-            server.listen(8081);
-            io = socketio.listen(server);
+            if (!io) {
+                server = process.env.HTTPS === "true"
+                    ? https.createServer({
+                        key: fs.readFileSync(path.join(__dirname, "../../../../", "./server.key")),
+                        cert: fs.readFileSync(path.join(__dirname, "../../../../", "./server.crt")),
+                    })
+                    : http.createServer();
+                console.log("Server listening...");
+                server.listen(8081);
+                io = socketio.listen(server);
+            }
             return [2 /*return*/, new Promise(function (resolve) {
                     io.on("connection", function (s) { return __awaiter(_this, void 0, void 0, function () {
                         var clSession, result;
