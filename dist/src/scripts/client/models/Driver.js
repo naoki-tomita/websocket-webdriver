@@ -117,7 +117,7 @@ function startDriver() {
 function initialize() {
     var _this = this;
     io = socketio(location.protocol + "//" + location.hostname + ":8081");
-    io.on("connect", function () { return __awaiter(_this, void 0, void 0, function () {
+    io.once("connect", function () { return __awaiter(_this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, establishHandShake()];
@@ -128,7 +128,10 @@ function initialize() {
             }
         });
     }); });
-    io.on("error", function (e) {
+    io.once("disconnect", function () {
+        io.removeAllListeners();
+    });
+    io.once("error", function (e) {
         Logger_1.log("Error: " + JSON.stringify(e));
     });
 }

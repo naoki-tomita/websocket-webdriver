@@ -54,11 +54,14 @@ function startDriver() {
 
 export function initialize() {
   io = socketio(`${location.protocol}//${location.hostname}:8081`)
-  io.on("connect", async () => {
+  io.once("connect", async () => {
     await establishHandShake();
     startDriver();
   });
-  io.on("error", (e: any) => {
+  io.once("disconnect", () => {
+    io.removeAllListeners();
+  });
+  io.once("error", (e: any) => {
     log(`Error: ${JSON.stringify(e)}`);
   });
 }
