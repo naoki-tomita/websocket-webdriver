@@ -7,5 +7,5 @@ exports.element = Element_1.element;
 var Timeout_1 = require("./utils/Timeout");
 exports.setTimeout = Timeout_1.setTimeout;
 var Browser_1 = require("./Browser");
-exports.captureScreenShot = Browser_1.captureScreenShot;
+exports.browser = Browser_1.browser;
 //# sourceMappingURL=index.js.map

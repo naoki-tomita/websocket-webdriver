@@ -47,27 +47,53 @@ function findElement(selector) {
     });
 }
 exports.findElement = findElement;
-function captureScreenShot(filePath) {
-    return __awaiter(this, void 0, void 0, function () {
-        var png;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluateAsync(function (result) {
-                        html2canvas(document.body)
-                            .then(function (canvas) {
-                            result(canvas.toDataURL());
-                        })
-                            .catch(function (e) {
-                            result("ERROR");
-                        });
-                    })];
-                case 1:
-                    png = _a.sent();
-                    fs_1.writeFileSync(filePath, new Buffer(png.replace("data:image/png;base64,", ""), "base64"));
-                    return [2 /*return*/];
-            }
+var Browser = /** @class */ (function () {
+    function Browser() {
+    }
+    Browser.prototype.captureScreenShot = function (filePath) {
+        return __awaiter(this, void 0, void 0, function () {
+            var png;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluateAsync(function (result) {
+                            html2canvas(document.body)
+                                .then(function (canvas) {
+                                result(canvas.toDataURL());
+                            })
+                                .catch(function (e) {
+                                result("ERROR");
+                            });
+                        })];
+                    case 1:
+                        png = _a.sent();
+                        fs_1.writeFileSync(filePath, new Buffer(png.replace("data:image/png;base64,", ""), "base64"));
+                        return [2 /*return*/];
+                }
+            });
         });
-    });
-}
-exports.captureScreenShot = captureScreenShot;
+    };
+    Browser.prototype.getUrl = function (path) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                FunctionEvaluator_1.evaluate(function (path) {
+                    location.assign(path);
+                }, path);
+                return [2 /*return*/];
+            });
+        });
+    };
+    Browser.prototype.reload = function (forceReload) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                FunctionEvaluator_1.evaluate(function () {
+                    location.reload(forceReload);
+                });
+                return [2 /*return*/];
+            });
+        });
+    };
+    return Browser;
+}());
+exports.Browser = Browser;
+exports.browser = new Browser();
 //# sourceMappingURL=Browser.js.map
