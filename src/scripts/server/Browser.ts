@@ -29,10 +29,10 @@ export class Browser {
     }, path);
   }
 
-  async reload(forceReload: boolean) {
-    evaluate(() => {
+  async reload(forceReload?: boolean) {
+    evaluate((forceReload?: boolean) => {
       location.reload(forceReload);
-    });
+    }, forceReload);
   }
 }
 
