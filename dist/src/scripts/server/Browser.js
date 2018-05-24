@@ -76,7 +76,9 @@ var Browser = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, FunctionEvaluator_1.evaluate(function (path) {
-                        location.assign(path);
+                        setTimeout(function () {
+                            location.assign(path);
+                        }, 100);
                     }, path)];
             });
         });
@@ -85,7 +87,9 @@ var Browser = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, FunctionEvaluator_1.evaluate(function (forceReload) {
-                        location.reload(forceReload);
+                        setTimeout(function () {
+                            location.reload(forceReload);
+                        }, 100);
                     }, forceReload)];
             });
         });

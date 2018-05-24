@@ -25,13 +25,17 @@ export class Browser {
 
   async getUrl(path: string) {
     return evaluate((path: string) => {
-      location.assign(path);
+      setTimeout(() => {
+        location.assign(path);
+      }, 100);
     }, path);
   }
 
   async reload(forceReload?: boolean) {
     return evaluate((forceReload?: boolean) => {
-      location.reload(forceReload);
+      setTimeout(() => {
+        location.reload(forceReload);
+      }, 100);
     }, forceReload);
   }
 }
