@@ -86,12 +86,11 @@ var Element = /** @class */ (function () {
     };
     Element.prototype.isDisabled = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var _this = this;
             var isDisabled;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
-                            var el = document.querySelector(_this.selector);
+                            var el = document.querySelector(selector);
                             if (el) {
                                 return el.disabled;
                             }
@@ -245,6 +244,19 @@ var Element = /** @class */ (function () {
                                     return el.innerText;
                                 }
                             }, this.selector)];
+                }
+            });
+        });
+    };
+    Element.prototype.sendKeys = function (keys) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.waitUntilAppear()];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/, FunctionEvaluator_1.evaluate(function (selector, keys) {
+                            }, this.selector, keys)];
                 }
             });
         });

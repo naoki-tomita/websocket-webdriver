@@ -1,6 +1,8 @@
 import * as socketio from "socket.io";
 import * as fs from "fs";
 import * as https from "https";
+import * as http from "http";
+import * as path from "path";
 
 import { createRandomString } from "../common/utils/Random";
 
@@ -20,9 +22,9 @@ async function waitMessage(s: socketio.Socket) {
 }
 
 export async function initialize() {
-  const server = https.createServer({
-    key: fs.readFileSync("./server.key"),
-    cert: fs.readFileSync("./server.crt"),
+  const server = (https || http).createServer({
+    key: fs.readFileSync(path.join(__dirname, "./server.key")),
+    cert: fs.readFileSync(path.join(__dirname,"./server.crt")),
   });
   console.log("Server listening...");
   server.listen(8081);

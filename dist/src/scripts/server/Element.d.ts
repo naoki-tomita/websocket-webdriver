@@ -14,4 +14,5 @@ export declare class Element {
     waitFor(cb: () => Promise<boolean> | boolean): Promise<void>;
     click(): Promise<{}>;
     getText(): Promise<{}>;
+    sendKeys(keys: string): Promise<{}>;
 }

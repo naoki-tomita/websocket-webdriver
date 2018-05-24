@@ -4,7 +4,7 @@ import { writeFileSync } from "fs";
 declare const html2canvas: Html2CanvasStatic;
 
 export async function findElement(selector: string) {
-  return evaluate<string>(selector => {
+  return evaluate(selector => {
     return document.querySelector(selector);
   }, selector);
 }

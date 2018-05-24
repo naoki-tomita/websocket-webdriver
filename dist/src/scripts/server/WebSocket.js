@@ -38,6 +38,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var socketio = require("socket.io");
 var fs = require("fs");
 var https = require("https");
+var http = require("http");
+var path = require("path");
 var Random_1 = require("../common/utils/Random");
 var io;
 var socket = null;
@@ -61,9 +63,9 @@ function initialize() {
         var _this = this;
         var server;
         return __generator(this, function (_a) {
-            server = https.createServer({
-                key: fs.readFileSync("./server.key"),
-                cert: fs.readFileSync("./server.crt"),
+            server = (https || http).createServer({
+                key: fs.readFileSync(path.join(__dirname, "./server.key")),
+                cert: fs.readFileSync(path.join(__dirname, "./server.crt")),
             });
             console.log("Server listening...");
             server.listen(8081);

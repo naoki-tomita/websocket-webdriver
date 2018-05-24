@@ -65,7 +65,7 @@ exports.parseMessage = parseMessage;
 function evaluate(message) {
     var fn = message.function, params = message.params;
     try {
-        return new Function(fn)().call(window, params);
+        return new Function(fn)().apply(window, params);
     }
     catch (e) {
         Logger_1.log("Error: " + e.message);
@@ -79,7 +79,7 @@ function evaluateAsync(message) {
             fn = message.function, params = message.params;
             try {
                 return [2 /*return*/, new Promise(function (resolve) {
-                        new Function(fn)().call(window, resolve, params);
+                        new Function(fn)().apply(window, resolve, params);
                     })];
             }
             catch (e) {

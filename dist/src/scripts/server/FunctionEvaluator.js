@@ -36,23 +36,31 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var WebSocket_1 = require("./WebSocket");
-function evaluate(fn, param) {
+function evaluate(fn) {
+    var params = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        params[_i - 1] = arguments[_i];
+    }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, WebSocket_1.send({
                     function: "return (" + fn.toString() + ")",
-                    params: param,
+                    params: params,
                 })];
         });
     });
 }
 exports.evaluate = evaluate;
-function evaluateAsync(fn, param) {
+function evaluateAsync(fn) {
+    var params = [];
+    for (var _i = 1; _i < arguments.length; _i++) {
+        params[_i - 1] = arguments[_i];
+    }
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, WebSocket_1.send({
                     asyncFunction: "return (" + fn.toString() + ")",
-                    params: param,
+                    params: params,
                 })];
         });
     });
