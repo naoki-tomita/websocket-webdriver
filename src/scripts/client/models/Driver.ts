@@ -28,23 +28,27 @@ async function establishHandShake() {
 function startDriver() {
   io.on("message", async (data: string) => {
     log(`Message: ${data}`);
-    const message = parseMessage(data);
-    let result: any;
-    if (isSyncMessage(message)) {
-      log(`Sync`);
-      result = evaluate({
-        function: message.function,
-        params: message.params,
-      });
-    } else {
-      log(`Async`);
-      result = await evaluateAsync({
-        function: message.asyncFunction,
-        params: message.params,
-      });
+    try {
+      const message = parseMessage(data);
+      let result: any;
+      if (isSyncMessage(message)) {
+        log(`Sync`);
+        result = evaluate({
+          function: message.function,
+          params: message.params,
+        });
+      } else {
+        log(`Async`);
+        result = await evaluateAsync({
+          function: message.asyncFunction,
+          params: message.params,
+        });
+      }
+      log(`Result: ${(JSON.stringify(result) || "").substr(0, 100)}`);
+      io.send(JSON.stringify(result));
+    } catch (e) {
+      return io.send(e.message);
     }
-    log(`Result: ${(JSON.stringify(result) || "").substr(0, 100)}`);
-    io.send(JSON.stringify(result));
   });
 }
 

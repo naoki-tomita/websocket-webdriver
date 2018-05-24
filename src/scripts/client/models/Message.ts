@@ -21,11 +21,8 @@ export function parseMessage(message: string): Message {
       }
     }
   } catch (e) {
-    return {
-      function: (() => {
-        console.log("failed to evaluate");
-      }).toString(),
-    };
+    error(e.message);
+    throw e;
   }
 }
 

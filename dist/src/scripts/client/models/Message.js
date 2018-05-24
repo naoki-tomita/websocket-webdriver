@@ -54,11 +54,8 @@ function parseMessage(message) {
         }
     }
     catch (e) {
-        return {
-            function: (function () {
-                console.log("failed to evaluate");
-            }).toString(),
-        };
+        Logger_1.error(e.message);
+        throw e;
     }
 }
 exports.parseMessage = parseMessage;

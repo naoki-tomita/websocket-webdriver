@@ -76,32 +76,40 @@ function establishHandShake() {
 function startDriver() {
     var _this = this;
     io.on("message", function (data) { return __awaiter(_this, void 0, void 0, function () {
-        var message, result;
+        var message, result, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
                     Logger_1.log("Message: " + data);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 5, , 6]);
                     message = Message_1.parseMessage(data);
-                    if (!Types_1.isSyncMessage(message)) return [3 /*break*/, 1];
+                    result = void 0;
+                    if (!Types_1.isSyncMessage(message)) return [3 /*break*/, 2];
                     Logger_1.log("Sync");
                     result = Message_1.evaluate({
                         function: message.function,
                         params: message.params,
                     });
-                    return [3 /*break*/, 3];
-                case 1:
+                    return [3 /*break*/, 4];
+                case 2:
                     Logger_1.log("Async");
                     return [4 /*yield*/, Message_1.evaluateAsync({
                             function: message.asyncFunction,
                             params: message.params,
                         })];
-                case 2:
-                    result = _a.sent();
-                    _a.label = 3;
                 case 3:
+                    result = _a.sent();
+                    _a.label = 4;
+                case 4:
                     Logger_1.log("Result: " + (JSON.stringify(result) || "").substr(0, 100));
                     io.send(JSON.stringify(result));
-                    return [2 /*return*/];
+                    return [3 /*break*/, 6];
+                case 5:
+                    e_1 = _a.sent();
+                    return [2 /*return*/, io.send(e_1.message)];
+                case 6: return [2 /*return*/];
             }
         });
     }); });
