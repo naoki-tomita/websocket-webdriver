@@ -1,4 +1,4 @@
-import { log } from "../utils/Logger";
+import { log, error } from "../utils/Logger";
 import { Message } from "../../common/Types";
 
 export function parseMessage(message: string): Message {
@@ -37,13 +37,15 @@ export function evaluate(message: {
   try {
     return new Function(fn)().apply(window, params);
   } catch (e) {
-    log(`Error: ${e.message}`);
+    error(e.message);
+    error(message.function);
+    error(JSON.stringify(message.params));
   }
 }
 
 export async function evaluateAsync(message: {
   function: string;
-  params?: any;
+  params: any[];
 }) {
   const { function: fn, params } = message;
   try {
@@ -51,6 +53,8 @@ export async function evaluateAsync(message: {
       new Function(fn)().apply(window, resolve, params);
     });
   } catch (e) {
-    log(`Error: ${e.message}`);
+    error(e.message);
+    error(message.function);
+    error(JSON.stringify(message.params));
   }
 }

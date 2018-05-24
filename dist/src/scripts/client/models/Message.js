@@ -68,7 +68,9 @@ function evaluate(message) {
         return new Function(fn)().apply(window, params);
     }
     catch (e) {
-        Logger_1.log("Error: " + e.message);
+        Logger_1.error(e.message);
+        Logger_1.error(message.function);
+        Logger_1.error(JSON.stringify(message.params));
     }
 }
 exports.evaluate = evaluate;
@@ -83,7 +85,9 @@ function evaluateAsync(message) {
                     })];
             }
             catch (e) {
-                Logger_1.log("Error: " + e.message);
+                Logger_1.error(e.message);
+                Logger_1.error(message.function);
+                Logger_1.error(JSON.stringify(message.params));
             }
             return [2 /*return*/];
         });

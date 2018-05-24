@@ -6,5 +6,5 @@ export declare function evaluate(message: {
 }): any;
 export declare function evaluateAsync(message: {
     function: string;
-    params?: any;
+    params: any[];
 }): Promise<{} | undefined>;
