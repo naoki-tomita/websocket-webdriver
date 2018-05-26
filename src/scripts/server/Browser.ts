@@ -30,7 +30,7 @@ export class Browser {
         location.assign(path);
       }, 100);
     }, path);
-    await sleep(500);
+    await sleep(1000);
   }
 
   async reload(forceReload?: boolean) {
@@ -39,7 +39,7 @@ export class Browser {
         location.reload(forceReload);
       }, 100);
     }, forceReload);
-    await sleep(500);
+    await sleep(1000);
   }
 }
 

@@ -84,7 +84,7 @@ var Browser = /** @class */ (function () {
                         }, path)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                        return [4 /*yield*/, Sleep_1.sleep(1000)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
@@ -103,7 +103,7 @@ var Browser = /** @class */ (function () {
                         }, forceReload)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                        return [4 /*yield*/, Sleep_1.sleep(1000)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];

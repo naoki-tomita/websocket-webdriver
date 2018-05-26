@@ -12,7 +12,7 @@ export declare class Element {
     waitUntilInvisible(): Promise<void>;
     waitUntilDisabled(): Promise<void>;
     waitFor(cb: () => Promise<boolean> | boolean): Promise<void>;
-    click(): Promise<{}>;
+    click(): Promise<void>;
     getText(): Promise<{}>;
     sendKeys(keys: string): Promise<{}>;
 }

@@ -43,14 +43,13 @@
     "build:server": "run-p build:server:*",
     "build:server:ts": "tsc",
     "serve": "run-p serve:*",
-    "serve:websocket": "ts-node ./test2.ts",
-    "serve:webserver": "ws -p 8080 --https",
     "watch": "run-p watch:*",
-    "watch:client": "run-p watch:client:*",
-    "watch:client:ts": "chokidar \"./src/scripts/client/**/*\" -c \"yarn build:client:ts\"",
     "prestart": "run-p build",
     "start": "run-p watch serve",
-    "test": "jest --config ./jest.config.json",
+    "test:mt": "jest --config ./jest.config.json",
+    "test:jt": "run-p test:jt:*",
+    "test:jt:serve": "ws",
+    "test:jt:jest": "jest --config ./jest.jt.config.json --forceExit",
     "prepublish": "run-p build"
   }
 }

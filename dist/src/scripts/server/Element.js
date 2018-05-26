@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var FunctionEvaluator_1 = require("./FunctionEvaluator");
 var Sleep_1 = require("./utils/Sleep");
 var Timeout_1 = require("./utils/Timeout");
+var Logger_1 = require("./utils/Logger");
 function element(selector) {
     return new Element(selector);
 }
@@ -51,10 +52,12 @@ var Element = /** @class */ (function () {
             var isExist;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
-                            var el = document.querySelector(selector);
-                            return !!el;
-                        }, this.selector)];
+                    case 0:
+                        Logger_1.Logger.verbose(this.selector + ": isExist");
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
+                                var el = document.querySelector(selector);
+                                return !!el;
+                            }, this.selector)];
                     case 1:
                         isExist = _a.sent();
                         return [2 /*return*/, !!isExist];
@@ -67,16 +70,18 @@ var Element = /** @class */ (function () {
             var isHidden;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
-                            var el = document.querySelector(selector);
-                            if (el) {
-                                var hidden = el.hidden ||
-                                    el.style.display === "none" ||
-                                    el.style.visibility === "hidden";
-                                return hidden;
-                            }
-                            return true;
-                        }, this.selector)];
+                    case 0:
+                        Logger_1.Logger.verbose(this.selector + ": isHidden");
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
+                                var el = document.querySelector(selector);
+                                if (el) {
+                                    var hidden = el.hidden ||
+                                        el.style.display === "none" ||
+                                        el.style.visibility === "hidden";
+                                    return hidden;
+                                }
+                                return true;
+                            }, this.selector)];
                     case 1:
                         isHidden = _a.sent();
                         return [2 /*return*/, !!isHidden];
@@ -89,13 +94,15 @@ var Element = /** @class */ (function () {
             var isDisabled;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
-                            var el = document.querySelector(selector);
-                            if (el) {
-                                return el.disabled;
-                            }
-                            return false;
-                        }, this.selector)];
+                    case 0:
+                        Logger_1.Logger.verbose(this.selector + ": isDisabled");
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
+                                var el = document.querySelector(selector);
+                                if (el) {
+                                    return el.disabled;
+                                }
+                                return false;
+                            }, this.selector)];
                     case 1:
                         isDisabled = _a.sent();
                         return [2 /*return*/, !!isDisabled];
@@ -107,6 +114,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.verbose(this.selector + ": waitUntilAppear");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isExist()];
@@ -120,6 +128,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.debug(this.selector + ": waitUntilVisible");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isHidden()];
@@ -133,6 +142,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.debug(this.selector + ": waitUntilEnable");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isDisabled()];
@@ -146,6 +156,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.debug(this.selector + ": waitUntilDisappear");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isExist()];
@@ -159,6 +170,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.debug(this.selector + ": waitUntilInvisible");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isHidden()];
@@ -172,6 +184,7 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
             return __generator(this, function (_a) {
+                Logger_1.Logger.debug(this.selector + ": waitUntilDisabled");
                 return [2 /*return*/, this.waitFor(function () { return __awaiter(_this, void 0, void 0, function () { return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, this.isDisabled()];
@@ -187,6 +200,7 @@ var Element = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        Logger_1.Logger.verbose(this.selector + ": waitFor");
                         timeout = Timeout_1.getTimeout();
                         startTime = Date.now();
                         _a.label = 1;
@@ -201,6 +215,7 @@ var Element = /** @class */ (function () {
                         _a.sent();
                         console.log(Date.now() - startTime);
                         if (Date.now() - startTime > timeout) {
+                            Logger_1.Logger.error("Wait " + timeout + " ms. but, Specified element not found.");
                             throw Error("Wait " + timeout + " ms. but, Specified element not found.");
                         }
                         _a.label = 4;
@@ -216,34 +231,55 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.waitUntilAppear()];
+                    case 0:
+                        Logger_1.Logger.debug(this.selector + ": click");
+                        return [4 /*yield*/, this.waitUntilAppear()];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/, FunctionEvaluator_1.evaluate(function (selector) {
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
                                 var el = document.querySelector(selector);
                                 var event = document.createEvent("Event");
                                 event.initEvent("click", true, true);
                                 if (el) {
-                                    el.dispatchEvent(event);
+                                    if (el.tagName.toLowerCase() === "a") {
+                                        var url = el.getAttribute("href") || "";
+                                        location.assign(url);
+                                    }
+                                    else {
+                                        el.dispatchEvent(event);
+                                    }
                                 }
                             }, this.selector)];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, Sleep_1.sleep(300)];
+                    case 3:
+                        _a.sent();
+                        return [2 /*return*/];
                 }
             });
         });
     };
     Element.prototype.getText = function () {
         return __awaiter(this, void 0, void 0, function () {
+            var foundText;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.waitUntilAppear()];
+                    case 0:
+                        Logger_1.Logger.debug(this.selector + ": getText");
+                        return [4 /*yield*/, this.waitUntilAppear()];
                     case 1:
                         _a.sent();
-                        return [2 /*return*/, FunctionEvaluator_1.evaluate(function (selector) {
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluate(function (selector) {
                                 var el = document.querySelector(selector);
                                 if (el) {
                                     return el.innerText;
                                 }
                             }, this.selector)];
+                    case 2:
+                        foundText = _a.sent();
+                        Logger_1.Logger.debug("Found: \"" + foundText + "\"");
+                        return [2 /*return*/, foundText];
                 }
             });
         });
@@ -252,7 +288,9 @@ var Element = /** @class */ (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.waitUntilAppear()];
+                    case 0:
+                        Logger_1.Logger.debug(this.selector + ": sendKeys(\"" + keys + "\")");
+                        return [4 /*yield*/, this.waitUntilAppear()];
                     case 1:
                         _a.sent();
                         return [2 /*return*/, FunctionEvaluator_1.evaluate(function (selector, keys) {
