@@ -4,6 +4,7 @@ var path = require("path");
 var config = {
     entry: [
         "babel-polyfill",
+        "html2canvas",
         "./src/scripts/client/index.ts"
     ],
     output: {
@@ -13,7 +14,7 @@ var config = {
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
-    mode: "development",
+    mode: "production",
     module: {
         rules: [
             { test: /\.tsx?$/, loader: "awesome-typescript-loader" }

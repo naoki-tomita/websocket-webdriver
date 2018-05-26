@@ -1,7 +1,7 @@
 import { evaluate } from "./FunctionEvaluator";
 import { sleep } from "./utils/Sleep";
 import { getTimeout } from "./utils/Timeout";
-import { Logger } from "./utils/Logger";
+import { Logger } from "../common/utils/Logger";
 
 export function element(selector: string) {
   return new Element(selector);
@@ -113,7 +113,7 @@ export class Element {
         }
       }
     }, this.selector);
-    await sleep(300);
+    await sleep(500);
   }
 
   async getText() {

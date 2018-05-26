@@ -47,7 +47,7 @@
     "prestart": "run-p build",
     "start": "run-p watch serve",
     "test:mt": "jest --config ./jest.config.json",
-    "test:jt": "run-p test:jt:*",
+    "test:jt": "run-s build && run-p test:jt:*",
     "test:jt:serve": "ws",
     "test:jt:jest": "jest --config ./jest.jt.config.json --forceExit",
     "prepublish": "run-p build"

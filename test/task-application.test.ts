@@ -1,5 +1,5 @@
 import { browser, element, setTimeout, sleep } from "../src/scripts/server";
-import { Logger, LogLevel } from "../src/scripts/server/utils/Logger";
+import { Logger, LogLevel } from "../src/scripts/common/utils/Logger";
 
 describe("Task viewer", () => {
   beforeAll(() => {
@@ -8,7 +8,7 @@ describe("Task viewer", () => {
   });
 
   beforeEach(async () => {
-    await browser.reload();
+    await browser.getUrl("/test/application.html");
   });
 
   it("should add task successfully", async () => {
@@ -43,5 +43,10 @@ describe("Task viewer", () => {
     await element("a").click();
     const page2Title = await element("h1").getText();
     expect(page2Title).toBe("Title text");
+  });
+
+  it("should take screenshot", async () => {
+    const png: string = await browser.captureScreenShot();
+    expect(png.substr(0, 22)).toBe("data:image/png;base64,");
   });
 });

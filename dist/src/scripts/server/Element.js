@@ -38,7 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var FunctionEvaluator_1 = require("./FunctionEvaluator");
 var Sleep_1 = require("./utils/Sleep");
 var Timeout_1 = require("./utils/Timeout");
-var Logger_1 = require("./utils/Logger");
+var Logger_1 = require("../common/utils/Logger");
 function element(selector) {
     return new Element(selector);
 }
@@ -252,7 +252,7 @@ var Element = /** @class */ (function () {
                             }, this.selector)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, Sleep_1.sleep(300)];
+                        return [4 /*yield*/, Sleep_1.sleep(500)];
                     case 3:
                         _a.sent();
                         return [2 /*return*/];

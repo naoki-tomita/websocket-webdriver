@@ -13,6 +13,6 @@ export declare class Element {
     waitUntilDisabled(): Promise<void>;
     waitFor(cb: () => Promise<boolean> | boolean): Promise<void>;
     click(): Promise<void>;
-    getText(): Promise<{}>;
-    sendKeys(keys: string): Promise<{}>;
+    getText(): Promise<any>;
+    sendKeys(keys: string): Promise<any>;
 }
