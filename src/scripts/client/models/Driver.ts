@@ -3,6 +3,7 @@ import { Session } from "./Session";
 import { log } from "../utils/Logger";
 import { parseMessage, evaluate, evaluateAsync } from "./Message";
 import { isSyncMessage } from "../../common/Types";
+import { scriptPath } from "../utils/LocationAnalyzer";
 
 let io: SocketIOClient.Socket;
 const session = new Session();
@@ -53,7 +54,8 @@ function startDriver() {
 }
 
 export function initialize() {
-  io = socketio(`${location.protocol}//${location.hostname}:8081`)
+  const url = scriptPath();
+  io = socketio(`${url.scheme}://${url.host}:8081`)
   io.once("connect", async () => {
     await establishHandShake();
     startDriver();

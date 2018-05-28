@@ -28,3 +28,17 @@ Object.defineProperty(window, "localStorage", {
 Object.defineProperty(window, "sessionStorage", {
   value: createStorageMock(),
 });
+
+class MockLocation {
+  _href: string;
+  get href() {
+    return this._href;
+  }
+  set href(url: string) {
+    this._href = url;
+  }
+}
+
+Object.defineProperty(window, "location", {
+  value: new MockLocation(),
+});
