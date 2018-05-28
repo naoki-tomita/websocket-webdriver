@@ -47,7 +47,7 @@ export async function evaluateAsync(message: {
   const { function: fn, params } = message;
   try {
     return new Promise(resolve => {
-      new Function(fn)().apply(window, resolve, params);
+      new Function(fn)().apply(window, [resolve, ...params]);
     });
   } catch (e) {
     error(e.message);

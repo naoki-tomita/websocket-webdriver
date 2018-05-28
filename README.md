@@ -1,4 +1,7 @@
 # WebSocket-WebDriver
+
+[![Build Status](https://travis-ci.com/naoki-tomita/websocket-webdriver.svg?branch=master)](https://travis-ci.com/naoki-tomita/websocket-webdriver)
+
 ## What is this?
 A browser driver like WebDriver.
 This should work on older browser, device browser.

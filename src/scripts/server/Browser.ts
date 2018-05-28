@@ -1,6 +1,7 @@
 import { evaluate, evaluateAsync } from "./FunctionEvaluator";
 import { writeFileSync } from "fs";
 import { sleep } from "./utils/Sleep";
+import { Logger } from "../common/utils/Logger";
 
 declare const html2canvas: Html2CanvasStatic;
 
@@ -11,7 +12,8 @@ export async function findElement(selector: string) {
 }
 
 export class Browser {
-  async captureScreenShot(filePath: string) {
+  async captureScreenShot(filePath?: string) {
+    Logger.debug("captureScreenShot");
     const png = await evaluateAsync(result => {
       html2canvas(document.body)
       .then(canvas => {
@@ -21,7 +23,17 @@ export class Browser {
         result("ERROR");
       });
     });
-    writeFileSync(filePath, new Buffer((png as string).replace("data:image/png;base64,", ""), "base64"));
+    Logger.debug("captured");
+    if (filePath) {
+      writeFileSync(
+        filePath,
+        new Buffer(
+          (png as string).replace("data:image/png;base64,", ""),
+          "base64",
+        ),
+      );
+    }
+    return png;
   }
 
   async getUrl(path: string) {
@@ -30,7 +42,7 @@ export class Browser {
         location.assign(path);
       }, 100);
     }, path);
-    await sleep(500);
+    await sleep(1000);
   }
 
   async reload(forceReload?: boolean) {
@@ -39,7 +51,7 @@ export class Browser {
         location.reload(forceReload);
       }, 100);
     }, forceReload);
-    await sleep(500);
+    await sleep(1000);
   }
 }
 

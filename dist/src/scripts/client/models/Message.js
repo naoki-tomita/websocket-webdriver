@@ -78,7 +78,7 @@ function evaluateAsync(message) {
             fn = message.function, params = message.params;
             try {
                 return [2 /*return*/, new Promise(function (resolve) {
-                        new Function(fn)().apply(window, resolve, params);
+                        new Function(fn)().apply(window, [resolve].concat(params));
                     })];
             }
             catch (e) {

@@ -13,7 +13,7 @@ const config: Configuration = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".json"]
   },
-  mode: "development",
+  mode: "production",
   module: {
     rules: [
       { test: /\.tsx?$/, loader: "awesome-typescript-loader" }

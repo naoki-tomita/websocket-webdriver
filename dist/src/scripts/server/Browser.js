@@ -38,6 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var FunctionEvaluator_1 = require("./FunctionEvaluator");
 var fs_1 = require("fs");
 var Sleep_1 = require("./utils/Sleep");
+var Logger_1 = require("../common/utils/Logger");
 function findElement(selector) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
@@ -56,19 +57,24 @@ var Browser = /** @class */ (function () {
             var png;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, FunctionEvaluator_1.evaluateAsync(function (result) {
-                            html2canvas(document.body)
-                                .then(function (canvas) {
-                                result(canvas.toDataURL());
-                            })
-                                .catch(function (e) {
-                                result("ERROR");
-                            });
-                        })];
+                    case 0:
+                        Logger_1.Logger.debug("captureScreenShot");
+                        return [4 /*yield*/, FunctionEvaluator_1.evaluateAsync(function (result) {
+                                html2canvas(document.body)
+                                    .then(function (canvas) {
+                                    result(canvas.toDataURL());
+                                })
+                                    .catch(function (e) {
+                                    result("ERROR");
+                                });
+                            })];
                     case 1:
                         png = _a.sent();
-                        fs_1.writeFileSync(filePath, new Buffer(png.replace("data:image/png;base64,", ""), "base64"));
-                        return [2 /*return*/];
+                        Logger_1.Logger.debug("captured");
+                        if (filePath) {
+                            fs_1.writeFileSync(filePath, new Buffer(png.replace("data:image/png;base64,", ""), "base64"));
+                        }
+                        return [2 /*return*/, png];
                 }
             });
         });
@@ -84,7 +90,7 @@ var Browser = /** @class */ (function () {
                         }, path)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                        return [4 /*yield*/, Sleep_1.sleep(1000)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];
@@ -103,7 +109,7 @@ var Browser = /** @class */ (function () {
                         }, forceReload)];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, Sleep_1.sleep(500)];
+                        return [4 /*yield*/, Sleep_1.sleep(1000)];
                     case 2:
                         _a.sent();
                         return [2 /*return*/];

@@ -67,7 +67,7 @@ export async function send(data: any) {
   if (!socket) {
     await initialize();
   }
-  return new Promise(resolve => {
+  return new Promise<any>(resolve => {
     (socket as socketio.Socket).once("message", data => {
       try {
         const parsedData = JSON.parse(data);
