@@ -29,16 +29,16 @@ Object.defineProperty(window, "sessionStorage", {
   value: createStorageMock(),
 });
 
-class MockLocation {
-  _href: string;
-  get href() {
-    return this._href;
+class CurrentScript {
+  _src: string = "";
+  get src() {
+    return this._src;
   }
-  set href(url: string) {
-    this._href = url;
+  set src(src: string) {
+    this._src = src;
   }
 }
 
-Object.defineProperty(window, "location", {
-  value: new MockLocation(),
+Object.defineProperty(document, "currentScript", {
+  value: new CurrentScript(),
 });
